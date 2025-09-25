@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Api from "./api";
 
-export function TacheForm({ titre, description, onTitreChange, onDescriptionChange, onValider, onAnnuler, isEdit }) {
+export function TacheForm({ titre, description, dateDebut, dateFin, onTitreChange, onDescriptionChange, onDateDebutChange, onDateFinChange, onValider, onAnnuler, isEdit }) {
   return (
     <div className="space-y-2">
       <h3 className="text-lg font-bold mb-2 text-purple-700">{isEdit ? "Modifier la tâche" : "Ajouter une tâche"}</h3>
@@ -18,6 +18,20 @@ export function TacheForm({ titre, description, onTitreChange, onDescriptionChan
         onChange={onDescriptionChange}
         rows={3}
         className="w-full px-4 py-2 rounded border-2 border-purple-300 mb-2 focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+      />
+      <label className="block text-left text-sm mt-2 mb-1 text-gray-700">Date de début</label>
+      <input
+        type="datetime-local"
+        value={dateDebut}
+        onChange={onDateDebutChange}
+        className="w-full px-4 py-2 rounded border-2 border-purple-300 mb-2"
+      />
+      <label className="block text-left text-sm mt-2 mb-1 text-gray-700">Date de fin</label>
+      <input
+        type="datetime-local"
+        value={dateFin}
+        onChange={onDateFinChange}
+        className="w-full px-4 py-2 rounded border-2 border-purple-300 mb-2"
       />
       <div className="flex gap-2 mt-2">
         <button

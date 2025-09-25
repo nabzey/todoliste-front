@@ -34,7 +34,95 @@
 }
 
 .card {
-  padding: 2em;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px 0 rgba(60, 72, 88, 0.12);
+  border: 1px solid #e5e7eb;
+  padding: 1.5em;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 22rem;
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+  box-shadow: 0 8px 32px 0 rgba(60, 72, 88, 0.18);
+}
+.card .card-image {
+  width: 100%;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.card .card-image img {
+  width: 7rem;
+  height: 7rem;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+}
+.card .card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.card .card-desc {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.card .card-status {
+  font-size: 0.8rem;
+  padding: 0.3em 0.8em;
+  border-radius: 0.5em;
+  margin: 0.5em auto 0 auto;
+  display: inline-block;
+}
+.card .card-status.en-cours {
+  background: #f3f4f6;
+  color: #2563eb;
+}
+.card .card-status.terminee {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.card .card-status.a-faire {
+  background: #fef3c7;
+  color: #92400e;
+}
+.card .card-audio {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+.card .card-dates {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+.card .card-actions {
+  display: flex;
+  gap: 0.7em;
+  justify-content: center;
+  margin-top: 1em;
+}
+.card .card-actions button {
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 0.5em;
+  padding: 0.4em 0.8em;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
+.card .card-actions button:hover {
+  background: #2563eb;
+  color: #fff;
 }
 
 .read-the-docs {

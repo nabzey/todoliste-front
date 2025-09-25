@@ -33,44 +33,38 @@ export default function TacheCard({ tache, deleteTache, modifierTache }) {
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 flex flex-col justify-between hover:shadow-lg transition h-80">
-        <div className="flex-1 flex flex-col">
-          <div className="w-full h-32 flex items-center justify-center mb-2">
-            {tache.photoUrl ? (
-              <img
-                src={tache.photoUrl}
-                alt="Photo tâche"
-                className="w-28 h-28 object-cover rounded-lg border"
-              />
-            ) : (
-              <div className="w-28 h-28 rounded-lg bg-gray-200 flex items-center justify-center text-gray-400 text-3xl">
-                <span className="material-icons">image</span>
-              </div>
-            )}
-          </div>
-          <h3 className="text-lg font-semibold text-blue-700 mb-2 text-center">{truncate(tache.titre)}</h3>
-          {tache.description && (
-            <p className="text-sm text-gray-600 mb-2 text-center">{truncate(tache.description)}</p>
-          )}
-          <span
-            className={`px-2 py-1 text-xs rounded mt-2 inline-block self-center ${
-              tache.statut === "terminée"
-                ? "bg-blue-100 text-blue-700"
-                : "bg-gray-100 text-gray-600"
-            }`}
-          >
-            {tache.statut || "En cours"}
-          </span>
-
-          {/* Affichage de l'audio sur la tâche si audioUrl présent */}
-          {tache.audioUrl && (
-            <audio controls className="w-full mb-2">
-              <source src={tache.audioUrl} type="audio/webm" />
-              Votre navigateur ne supporte pas l'audio.
-            </audio>
+      <div className="card">
+        <div className="card-image">
+          {tache.photoUrl ? (
+            <img src={tache.photoUrl} alt="Photo tâche" />
+          ) : (
+            <div className="w-28 h-28 rounded-lg bg-gray-200 flex items-center justify-center text-gray-400 text-3xl">
+              <span className="material-icons">image</span>
+            </div>
           )}
         </div>
-        <div className="flex items-center gap-2 mt-4 justify-center">
+        <h3 className="card-title">{truncate(tache.titre)}</h3>
+        {tache.description && (
+          <p className="card-desc">{truncate(tache.description)}</p>
+        )}
+        <span className={`card-status ${tache.statut === "EN_COURS" ? "en-cours" : tache.statut === "TERMINER" ? "terminee" : "a-faire"}`}>
+          {tache.statut || "En cours"}
+        </span>
+        {tache.audioUrl && (
+          <audio controls className="card-audio">
+            <source src={tache.audioUrl} type="audio/webm" />
+            Votre navigateur ne supporte pas l'audio.
+          </audio>
+        )}
+        <div className="card-dates">
+          {tache.dateDebut && (
+            <div>Date de début : {new Date(tache.dateDebut).toLocaleString()}</div>
+          )}
+          {tache.dateFin && (
+            <div>Date de fin : {new Date(tache.dateFin).toLocaleString()}</div>
+          )}
+        </div>
+        <div className="card-actions">
           <button
             onClick={() => {
               setEditId(tache.id);
@@ -78,24 +72,21 @@ export default function TacheCard({ tache, deleteTache, modifierTache }) {
               setEditDescription(tache.description || "");
               setEditStatut(tache.statut || "EN_COURS");
             }}
-            className="text-gray-400 hover:text-blue-600 p-1"
             title="Modifier"
           >
             <Pencil size={18} />
           </button>
           <button
             onClick={() => deleteTache(tache.id)}
-            className="text-gray-400 hover:text-red-600 p-1"
             title="Supprimer"
           >
             <Trash2 size={18} />
           </button>
           <button
             onClick={handleShowDetails}
-            className="text-gray-400 hover:text-green-600 p-1"
             title="Voir les détails"
           >
-         <MoreHorizontal size={18} /> 
+            <MoreHorizontal size={18} />
           </button>
         </div>
       </div>

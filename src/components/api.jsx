@@ -45,7 +45,7 @@ export default function Api() {
         formData.append("photo", photoFile);
       }
       if (audioBlob) {
-        formData.append("audio", audioBlob, "message.mp3");
+        formData.append("audio", audioBlob, "message.webm");
       }
       const response = await fetch("http://localhost:4000/taches", {
         method: "POST",
@@ -57,7 +57,9 @@ export default function Api() {
       if (response.ok) {
         fetchTaches();
       } else {
-        setError("Erreur lors de l'ajout");
+        const errorText = await response.text();
+        setError("Erreur lors de l'ajout : " + errorText);
+        console.error("Erreur API:", errorText);
       }
     } catch {
       setError("Erreur de connexion");
