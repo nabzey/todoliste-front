@@ -14,7 +14,8 @@ export default function Auth() {
 
   const togglePassword = () => setShowPassword((prev) => !prev);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault()
     if (!email || !password) {
       setError("Veuillez remplir tous les champs");
       return;
@@ -24,16 +25,19 @@ export default function Auth() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/users/auth", {
+      const response = await fetch("http://localhost:4000/users/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+      
       if (response.ok) {
         const data = await response.json();
+        console.log(data.data.users);
+ 
         if (data.data && data.data.accesToken) {
           localStorage.setItem("token", data.data.accesToken);
+          localStorage.setItem("email", data.data.users.email);
           navigate("/page");
         }
       } else {
@@ -88,8 +92,8 @@ export default function Auth() {
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </span>
         </div>
-        <button
-          onClick={handleLogin}
+        <button type="button"
+          onClick={(e)=>handleLogin(e)}
           disabled={loading}
           className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white py-2 px-4 rounded transition-colors"
         >

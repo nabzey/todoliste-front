@@ -36,6 +36,8 @@ export function TacheForm({ titre, description, onTitreChange, onDescriptionChan
 export function NavbarUser() {
   // Récupère l'email stocké lors de la connexion
   const email = localStorage.getItem("email") || localStorage.getItem("userEmail") || "Utilisateur";
+  console.log(email);
+  
   return (
     <nav className="w-full bg-white shadow flex justify-end items-center px-8 py-4 mb-8 rounded">
       <span className="font-semibold text-blue-700 mr-4">{email}</span>

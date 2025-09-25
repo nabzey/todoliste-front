@@ -9,7 +9,7 @@ export default function Api() {
   const fetchTaches = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:5000/taches", {
+      const response = await fetch("http://localhost:4000/taches", {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
@@ -35,7 +35,7 @@ export default function Api() {
     }
   };
 
-  const addTache = async (titre, description, photoFile) => {
+  const addTache = async (titre, description, photoFile, audioBlob) => {
     const token = localStorage.getItem("token");
     try {
       const formData = new FormData();
@@ -44,7 +44,10 @@ export default function Api() {
       if (photoFile) {
         formData.append("photo", photoFile);
       }
-      const response = await fetch("http://localhost:5000/taches", {
+      if (audioBlob) {
+        formData.append("audio", audioBlob, "message.mp3");
+      }
+      const response = await fetch("http://localhost:4000/taches", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -64,7 +67,7 @@ export default function Api() {
   const deleteTache = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`http://localhost:5000/taches/${id}`, {
+      const response = await fetch(`http://localhost:4000/taches/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` },
       });
@@ -82,7 +85,7 @@ export default function Api() {
   const modifierTache = async (id, titre, description, statut) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`http://localhost:5000/taches/${id}`, {
+      const response = await fetch(`http://localhost:4000/taches/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

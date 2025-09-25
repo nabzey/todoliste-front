@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import AudioRecorder from "./apivocal";
 
 export default function Formulaire({ addTache }) {
   const [showForm, setShowForm] = useState(false);
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
   const [photoFile, setPhotoFile] = useState(null);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const audioRef = useRef();
 
   return (
     <div className="mb-6">
@@ -60,13 +63,22 @@ export default function Formulaire({ addTache }) {
                 className="w-32 h-32 object-cover rounded-lg border mb-2"
               />
             )}
+            {/* Enregistrement audio vocal via AudioRecorder */}
+            <AudioRecorder onAudioReady={setAudioBlob} />
+            {audioBlob && (
+              <audio controls className="w-full mb-2">
+                <source src={URL.createObjectURL(audioBlob)} type="audio/webm" />
+                Votre navigateur ne supporte pas l'audio.
+              </audio>
+            )}
             <div className="flex gap-2">
               <button
                 onClick={() => {
-                  addTache(titre, description, photoFile);
+                  addTache(titre, description, photoFile, audioBlob);
                   setTitre("");
                   setDescription("");
                   setPhotoFile("");
+                  setAudioBlob(null);
                   setShowForm(false);
                 }}
                 className="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-2 rounded-lg font-semibold shadow"
