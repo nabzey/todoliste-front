@@ -6,9 +6,6 @@ export default function Api() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
-  
-  
-
   const fetchTaches = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -38,18 +35,22 @@ export default function Api() {
     }
   };
 
-  const addTache = async (titre, description) => {
+  const addTache = async (titre, description, photoFile) => {
     const token = localStorage.getItem("token");
     try {
+      const formData = new FormData();
+      formData.append("titre", titre);
+      formData.append("description", description || titre);
+      if (photoFile) {
+        formData.append("photo", photoFile);
+      }
       const response = await fetch("http://localhost:5000/taches", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ titre, description: description || titre }),
+        body: formData,
       });
-
       if (response.ok) {
         fetchTaches();
       } else {
@@ -94,7 +95,7 @@ export default function Api() {
         fetchTaches();
         setMessage("✏️ Tâche modifiée");
       } else {
-        setError(" Erreur lors de la modification");
+        setError("Erreur lors de la modification");
       }
     } catch {
       setError("Erreur de connexion");

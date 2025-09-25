@@ -32,3 +32,24 @@ export function TacheForm({ titre, description, onTitreChange, onDescriptionChan
     </div>
   );
 }
+
+export function NavbarUser() {
+  // Récupère l'email stocké lors de la connexion
+  const email = localStorage.getItem("email") || localStorage.getItem("userEmail") || "Utilisateur";
+  return (
+    <nav className="w-full bg-white shadow flex justify-end items-center px-8 py-4 mb-8 rounded">
+      <span className="font-semibold text-blue-700 mr-4">{email}</span>
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("email");
+          localStorage.removeItem("userEmail");
+          window.location.href = "/";
+        }}
+        className="bg-gray-200 hover:bg-red-400 text-red-700 px-3 py-1 rounded shadow"
+      >
+        Déconnexion
+      </button>
+    </nav>
+  );
+}

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Inscription() {
   const [successMessage, setSuccessMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,8 +19,10 @@ export default function Inscription() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const togglePassword = () => setShowPassword((prev) => !prev);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,12 +59,10 @@ export default function Inscription() {
     }
   };
 
-
   const inputs = [
     { name: "name", type: "text", placeholder: "Nom d'utilisateur" },
     { name: "email", type: "email", placeholder: "Email" },
     { name: "login", type: "text", placeholder: "Login" },
-    { name: "password", type: "password", placeholder: "Mot de passe" },
   ];
 
   return (
@@ -95,6 +97,28 @@ export default function Inscription() {
         />
       ))}
 
+      {/* Champ mot de passe avec toggle */}
+      <div className="relative mb-4">
+        <input
+          name="password"
+          type={showPassword ? "text" : "password"}
+          placeholder="Mot de passe"
+          value={formData.password}
+          onChange={handleChange}
+          disabled={loading}
+          className="w-full px-4 py-3 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition pr-10"
+        />
+        <span
+          type="button"
+          onClick={togglePassword}
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900"
+          aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+          tabIndex={-1}
+        >
+          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+        </span>
+      </div>
+
       <button
         type="submit"
         disabled={loading}
@@ -108,9 +132,10 @@ export default function Inscription() {
       <p className="mt-4 text-center text-sm text-gray-600">
         Déjà inscrit ?{" "}
         <span
-          type="button"
           onClick={() => navigate("/")}
           className="text-blue-600 underline cursor-pointer"
+          role="button"
+          tabIndex={0}
         >
           Se connecter
         </span>

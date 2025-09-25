@@ -5,12 +5,13 @@ export default function Page() {
  
 
   return (
-  <div className="bg-white-900 rounded-xl shadow-lg w-full max-w-3xl p-8" style={{ width: "1200px", height: "600px" }}>
-    <h1 className="text-3xl font-bold text-black text-center mb-6">
-      Ma Todo-Liste
-    </h1>
-     <Listes/>
-</div>
-
+    <>
+      
+      <div className="w-full max-w-6xl mx-auto p-12">
+        <h1 className="text-3xl font-bold text-black text-center mb-8">Ma Todo-Liste</h1>
+      
+        <Listes />
+      </div>
+    </>
   );
 }
